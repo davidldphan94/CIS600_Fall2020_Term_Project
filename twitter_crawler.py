@@ -10,10 +10,10 @@ from urllib.error import URLError
 from http.client import BadStatusLine
 
 
-CONSUMER_KEY = 'NYM6PJlVlPkCjnmltFO7fQ02L'
-CONSUMER_SECRET = 'fbk0RyynUWMqhysKsx9MzdkEBq07fEsbbmSGrGEH0rlQHl3kis'
-OAUTH_TOKEN = '1304423708312862722-a6OYXOk9bgdRuhGi4HeOKA7Y5Uqfex'
-OAUTH_TOKEN_SECRET = 'KRurmb7Tcouqlz9l8qTZ0SHWYXgbK3wylXC3LEpG0X7gv'
+CONSUMER_KEY = ''
+CONSUMER_SECRET = ''
+OAUTH_TOKEN = ''
+OAUTH_TOKEN_SECRET = ''
 
 auth = twitter.oauth.OAuth(OAUTH_TOKEN, OAUTH_TOKEN_SECRET,
                            CONSUMER_KEY, CONSUMER_SECRET)
