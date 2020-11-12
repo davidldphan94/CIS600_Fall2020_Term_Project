@@ -19,6 +19,7 @@ auth = twitter.oauth.OAuth(OAUTH_TOKEN, OAUTH_TOKEN_SECRET,
                            CONSUMER_KEY, CONSUMER_SECRET)
 
 twitter_api = twitter.Twitter(auth=auth)
+twitter_stream = twitter.TwitterStream(auth=auth)
 
 # Borrowed from Twitter Cookbook... modified to sort by followers
 def get_user_profile(twitter_api, screen_names=None, user_ids=None):
@@ -110,18 +111,33 @@ def make_twitter_request(twitter_api_func, max_errors=10, *args, **kw):
                 print("Too many consecutive errors...bailing out.", file=sys.stderr)
                 raise
 
-def main():
-    # Main function
+def retweet_extractor():
+    stream = twitter_stream.statuses.filter(track='memes') 
+    import pdb; pdb.set_trace()
+    for tweet in stream: # identifying the same meme == looking and seeing the "retweeted status"
+        if 'quoted_status' in tweet:
+            text = tweet['quoted_status']
+        elif 'extended_tweet' in tweet:
+            text = tweet['extended_tweet']['full_text']
+            print(text)
+        else:
+            print('retweeted_status')
+            continue
+
+def graph_generator():
+    """
+    Twitter Crawler from HW 2
+    """
     depth = 0
     pre_graph = {}
-
     # Step 1: Starting point
-    screen_name = 'edmundyu1001' 
+    screen_name = '' #insert twitter handle here
     starting_point = twitter_api.users.search(q=screen_name)[0]
     next_queue = [starting_point["screen_name"]] 
     total_nodes = 1
     #crawler taken from slides, adjusted accordingly to get reciprocal friends
-    while total_nodes < 100:
+    while total_nodes < 5:
+        import pdb;pdb.set_trace()
         queue, next_queue = next_queue, []
         for handle in queue:
             their_friends = []
@@ -191,6 +207,10 @@ def main():
     plt.savefig("mygraph.png")
     plt.show()
 
+def main():
+    retweet_extractor()
+    graph_generator()
+    
 if __name__ == "__main__":
     main() 
 
