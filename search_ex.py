@@ -1,17 +1,23 @@
-import twitter
+import tweepy
 
 def login():
-  CONSUMER_KEY='aLQEDUQZrJg0y783OUjK0s0tD'
-  CONSUMER_SECRET='29demwjvUdpQ5SQTA6cq7QIBbnkFoDd2dCYmpfg5nLNwaybs5v'
-  OAUTH_TOKEN='1311720591922286597-FUJ4rBoPG3lTpiIxwUqliTdKRZ5EWt'
-  OAUTH_TOKEN_SECRET='aqeX2Dm5sLoDeIFh6dxGHqO43ilRkw6wnKc3Xdd8QwuyM'
-  auth = twitter.oauth.OAuth(OAUTH_TOKEN, OAUTH_TOKEN_SECRET,CONSUMER_KEY, CONSUMER_SECRET)
-  twitter_api = twitter.Twitter(auth=auth)
+  CONSUMER_KEY=''
+  CONSUMER_SECRET=''
+  OAUTH_TOKEN=''
+  OAUTH_TOKEN_SECRET=''
+  auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+  auth.set_access_token(OAUTH_TOKEN, OAUTH_TOKEN_SECRET) 
+  twitter_api = tweepy.API(auth,wait_on_rate_limit=True)
   return twitter_api
 
 if __name__ == '__main__':
   api = login()
 
-  for tweet in api.search.tweets(q="#meme",count=5000).items():
-    print(tweet)
+  for tweet in tweepy.Cursor(api.search,q=["#meme","#memes"]).items():
+    print("Content: ",tweet.text)
+    if tweet.retweet_count!=0:
+      print("ID: ",tweet.id)
+      print("Retweeters: ") # This may show up empty sometimes
+      for t in api.retweets(tweet.id): print(t.user.screen_name,end=' ') # Print all accounts that retweet
+    print('\n\n') # Separate Output a bit
   
