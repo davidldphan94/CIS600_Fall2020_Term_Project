@@ -19,7 +19,6 @@ auth = twitter.oauth.OAuth(OAUTH_TOKEN, OAUTH_TOKEN_SECRET,
                            CONSUMER_KEY, CONSUMER_SECRET)
 
 twitter_api = twitter.Twitter(auth=auth)
-twitter_stream = twitter.TwitterStream(auth=auth)
 
 # Borrowed from Twitter Cookbook... modified to sort by followers
 def get_user_profile(twitter_api, screen_names=None, user_ids=None):

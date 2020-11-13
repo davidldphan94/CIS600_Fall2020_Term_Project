@@ -2,25 +2,44 @@ import twitter
 import json
 import pdb
 
+import tweepy
 
-def login(stream=False):
+
+def login():
+    CONSUMER_KEY = 'NYM6PJlVlPkCjnmltFO7fQ02L'
+    CONSUMER_SECRET = 'fbk0RyynUWMqhysKsx9MzdkEBq07fEsbbmSGrGEH0rlQHl3kis'
+    OAUTH_TOKEN = '1304423708312862722-a6OYXOk9bgdRuhGi4HeOKA7Y5Uqfex'
+    OAUTH_TOKEN_SECRET = 'KRurmb7Tcouqlz9l8qTZ0SHWYXgbK3wylXC3LEpG0X7gv'
+    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+    auth.set_access_token(OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+    twitter_api = tweepy.API(auth, wait_on_rate_limit=True)
+    return twitter_api
+
+def login_streaming():
     CONSUMER_KEY = ''
     CONSUMER_SECRET = ''
     OAUTH_TOKEN = ''
     OAUTH_TOKEN_SECRET = ''
     auth = twitter.oauth.OAuth(
         OAUTH_TOKEN, OAUTH_TOKEN_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
-    if stream:
-        twitter_api = twitter.TwitterStream(auth=auth)
-    else:
-        twitter_api = twitter.Twitter(auth=auth)
+    twitter_api = twitter.TwitterStream(auth=auth)
     return twitter_api
 
-def retweet_extractor(): #uses streaming API, still working on it
-    api = login(stream=True)
+def login_search():
+    CONSUMER_KEY = ''
+    CONSUMER_SECRET = ''
+    OAUTH_TOKEN = ''
+    OAUTH_TOKEN_SECRET = ''
+    auth = twitter.oauth.OAuth(
+        OAUTH_TOKEN, OAUTH_TOKEN_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
+    twitter_api = twitter.Twitter(auth=auth)
+    return twitter_api
+
+
+def retweet_extractor_streaming():  # uses streaming API, still working on it
+    api = login_streaming()
     stream = api.statuses.filter(track='memes')
-    import pdb; pdb.set_trace()
-    for tweet in stream: # identifying the same meme == looking and seeing the "retweeted status"
+    for tweet in stream:  # identifying the same meme == looking and seeing the "retweeted status"
         if 'quoted_status' in tweet:
             text = tweet['quoted_status']
         elif 'extended_tweet' in tweet:
@@ -30,24 +49,22 @@ def retweet_extractor(): #uses streaming API, still working on it
             print('retweeted_status')
             continue
 
-
-if __name__ == '__main__':
-    api = login()
+def retweet_extractor_search():
+    api = login_search()
     retweet = 0
     quoted = 0
-    extended = 0 
     original_content = 0
-    search_results = api.search.tweets(q="meme", count=5000)
+    search_results = api.search.tweets(q="meme,memes", count=5000)
     tweets = []
-    for _ in range(5): #change as necessary to get more batches
+    for _ in range(5):  # change as necessary to get more batches
         try:
             next_results = search_results['search_metadata']['next_results']
-        except KeyError as e:
+        except KeyError:
             break
         kwarg = dict([kv.split('=') for kv in next_results[1:].split('&')])
         tweets += search_results['statuses']
         search_results = api.search.tweets(**kwarg)
-        
+
     for tweet in tweets:
         if tweet['is_quote_status']:
             print('quoted_status')
@@ -58,5 +75,16 @@ if __name__ == '__main__':
         else:
             print('original tweet')
             original_content += 1
-            # print(tweet)
-    # pdb.set_trace()
+
+if __name__ == '__main__':
+    api = login()
+    for tweet in tweepy.Cursor(api.search, q=["#meme", "#memes"]).items():
+        print("Content: ", tweet.text)
+        if tweet.retweet_count != 0:
+            print("ID: ", tweet.id)
+            print("Retweeters: ")  # This may show up empty sometimes
+            for t in api.retweets(tweet.id):
+                # Print all accounts that retweet
+                print(t.user.screen_name, end=' ')
+            print('\n\n')  # Separate Output a bit
+
