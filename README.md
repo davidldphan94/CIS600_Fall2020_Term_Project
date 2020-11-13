@@ -1,6 +1,6 @@
 # **CIS600_Fall2020_Term_Project**
 
-# Contributors: David Phan, Matthew Moran, and Nicholas Weier
+Contributors: David Phan, Matthew Moran, and Nicholas Weier
 
 This is our final project for CIS600 Social Media and Data Mining. /n
 Semester: Fall 2020
@@ -13,8 +13,8 @@ Our project is centered around the tracking of memes in social networking, and t
 
 ### Description of Files:
 
-### twitter_crawler.py
+  ### twitter_crawler.py
 
-### search_ex.py
+  ### search_ex.py
 
 
