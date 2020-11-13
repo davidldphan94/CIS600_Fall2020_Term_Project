@@ -2,12 +2,12 @@
 
 # Contributors: David Phan, Matthew Moran, and Nicholas Weier
 
-#This is our final project for CIS600 Social Media and Data Mining. 
-#Semester: Fall 2020
-#Professor: Edmund Yu
-#Syracuse University
+This is our final project for CIS600 Social Media and Data Mining. /n
+Semester: Fall 2020
+Professor: Edmund Yu
+Syracuse University
 
-#Our project is centered around the tracking of memes in social networking, and the analysis of the information gained from such tracking.
+Our project is centered around the tracking of memes in social networking, and the analysis of the information gained from such tracking.
 
 
 
