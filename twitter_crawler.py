@@ -111,19 +111,6 @@ def make_twitter_request(twitter_api_func, max_errors=10, *args, **kw):
                 print("Too many consecutive errors...bailing out.", file=sys.stderr)
                 raise
 
-def retweet_extractor():
-    stream = twitter_stream.statuses.filter(track='memes') 
-    import pdb; pdb.set_trace()
-    for tweet in stream: # identifying the same meme == looking and seeing the "retweeted status"
-        if 'quoted_status' in tweet:
-            text = tweet['quoted_status']
-        elif 'extended_tweet' in tweet:
-            text = tweet['extended_tweet']['full_text']
-            print(text)
-        else:
-            print('retweeted_status')
-            continue
-
 def graph_generator():
     """
     Twitter Crawler from HW 2
@@ -208,7 +195,6 @@ def graph_generator():
     plt.show()
 
 def main():
-    retweet_extractor()
     graph_generator()
     
 if __name__ == "__main__":
