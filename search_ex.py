@@ -6,10 +6,10 @@ import tweepy
 
 
 def login():
-    CONSUMER_KEY = 'NYM6PJlVlPkCjnmltFO7fQ02L'
-    CONSUMER_SECRET = 'fbk0RyynUWMqhysKsx9MzdkEBq07fEsbbmSGrGEH0rlQHl3kis'
-    OAUTH_TOKEN = '1304423708312862722-a6OYXOk9bgdRuhGi4HeOKA7Y5Uqfex'
-    OAUTH_TOKEN_SECRET = 'KRurmb7Tcouqlz9l8qTZ0SHWYXgbK3wylXC3LEpG0X7gv'
+    CONSUMER_KEY = ''
+    CONSUMER_SECRET = ''
+    OAUTH_TOKEN = ''
+    OAUTH_TOKEN_SECRET = ''
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
     twitter_api = tweepy.API(auth, wait_on_rate_limit=True)
@@ -64,7 +64,6 @@ def retweet_extractor_search():
         kwarg = dict([kv.split('=') for kv in next_results[1:].split('&')])
         tweets += search_results['statuses']
         search_results = api.search.tweets(**kwarg)
-
     for tweet in tweets:
         if tweet['is_quote_status']:
             print('quoted_status')
