@@ -16,6 +16,7 @@ Our project is centered around the tracking of memes in social networking, and t
   ### Figure_1.png
   A graph of our collected memes. 
 
-  ### search_ex.py
+  ### meme_graph.py
+  Code that saves tweets to a text file, as well as pulling memes to be added to the graph.
 
 
