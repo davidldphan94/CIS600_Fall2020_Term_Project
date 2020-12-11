@@ -1,4 +1,4 @@
-# **CIS600_Fall2020_Term_Project**
+# **CIS600 Fall2020 Term Project**
 
 Contributors: David Phan, Matthew Moran, and Nicholas Weier
 
@@ -18,5 +18,11 @@ Our project is centered around the tracking of memes in social networking, and t
 
   ### meme_graph.py
   Code that saves tweets to a text file, as well as pulling memes to be added to the graph.
+  
+  ### nick_tweets.txt
+  
+  ### sentiment_analysis.py
+  
+  
 
 
