@@ -1,7 +1,6 @@
 import tweepy
 import networkx as nx
 import matplotlib.pyplot as plt
-import nltk
 
 def login():
     """
@@ -17,6 +16,9 @@ def login():
     return twitter_api
 
 if __name__ == '__main__':
+    """
+    Runs graph generation code.
+    """
     api = login()
     G = nx.Graph()
     f = open('tweets.txt', 'w', encoding='utf-8')
