@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 import nltk
 
 def login():
+    """
+    Sets up Twitter API for use given OAUTH keys.
+    """
     CONSUMER_KEY = ''
     CONSUMER_SECRET = ''
     OAUTH_TOKEN = ''
@@ -14,19 +17,19 @@ def login():
     return twitter_api
 
 if __name__ == '__main__':
-    seen = set()
     api = login()
     G = nx.Graph()
     f = open('tweets.txt', 'w', encoding='utf-8')
     while nx.number_of_nodes(G) < 100:
-        for tweet in tweepy.Cursor(api.search, q="#meme", lang='en').items():
+        query = "meme,memes,#meme,#memes" #change if necessary
+        for tweet in tweepy.Cursor(api.search, q=query, lang='en', result_type='popular').items(): 
             if 'retweeted_status' in tweet._json.keys(): #if the tweet found is a retweet
                 tweet = tweet.retweeted_status #use the source of the tweet instead
-            print("ID: ",tweet.id,"   Retweets: ", tweet.retweet_count)
             retweeters = [t.user.screen_name for t in api.retweets(tweet.id)]
             if len(retweeters) and tweet.user.screen_name not in G.nodes():
+                print("ID: ",tweet.id,"   Retweets: ", tweet.retweet_count)
                 for i in retweeters: G.add_edge(tweet.user.screen_name, i)
-                f.writelines([tweet.user.screen_name,"\n", tweet.text, "\n\n"])
+                f.writelines([tweet.text, "\n"])
                 if nx.number_of_nodes(G) > 100:
                     break
         
