@@ -13,7 +13,8 @@ Our project is centered around the tracking of memes in social networking, and t
 
 ### Description of Files:
 
-  ### twitter_crawler.py
+  ### Figure_1.png
+  A graph of our collected memes. 
 
   ### search_ex.py
 
